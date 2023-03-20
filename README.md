@@ -13,8 +13,8 @@ This repository contains a Python implementation of a Genetic Algorithm (GA) for
 1. Clone the repository:
 
 ```
-bashCopy codegit clone https://github.com/yourusername/genetic-image-fitting.git
-cd genetic-image-fitting
+bashCopy codegit clone https://github.com/Rvosuke/GA-Image_Fitting.git
+cd imageFitting
 ```
 
 1. Modify the `main()` function in `ga_image_fitting.py` to set your desired parameters and the path to the target image.
@@ -22,7 +22,7 @@ cd genetic-image-fitting
 
 ```
 bashCopy code
-python ga_image_fitting.py
+python imageFitting.py
 ```
 
 1. The script will evolve the population and save the final image approximating the target image.
