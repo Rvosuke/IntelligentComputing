@@ -1,50 +1,63 @@
-# Genetic Algorithm for Image Fitting
 
-This repository contains a Python implementation of a Genetic Algorithm (GA) for fitting an image using a collection of triangles. The goal of this project is to approximate a target image (e.g., Google Chrome logo) using a set of triangles with different vertices, colors, and transparency levels.
 
-## Dependencies
+# Genetic Algorithm for Image Approximation
 
-- Python 3.6+
-- NumPy
-- Pillow (Python Imaging Library)
-
-## Usage
-
-1. Clone the repository:
-
-```
-bashCopy codegit clone https://github.com/Rvosuke/GA-Image_Fitting.git
-cd imageFitting
-```
-
-1. Modify the `main()` function in `ga_image_fitting.py` to set your desired parameters and the path to the target image.
-2. Run the script:
-
-```
-bashCopy code
-python imageFitting.py
-```
-
-1. The script will evolve the population and save the final image approximating the target image.
+This Python script utilizes a genetic algorithm to approximate a target image using semi-transparent triangles. It creates a series of images that evolve over time, representing the progress of the algorithm in finding a close approximation of the target image.
 
 ## Overview
 
-The Genetic Algorithm follows these main steps:
+The genetic algorithm works as follows:
 
-1. **Encoding**: Each individual (chromosome) is represented as a list of triangle vertices' coordinates and color values (RGBA).
-2. **Initialization**: Generate an initial population of random individuals.
-3. **Fitness evaluation**: Compute the fitness of each individual by rendering the triangles and calculating the difference between the rendered image and the target image.
-4. **Selection**: Choose parents from the population using roulette wheel selection.
-5. **Crossover**: Perform single-point or multi-point crossover between selected parents to generate offspring.
-6. **Mutation**: Apply mutation to the offspring's genes with a certain probability.
-7. **Evolution**: Repeat the selection, crossover, and mutation process until a stopping condition is met (e.g., a maximum number of generations).
+1. A population of individuals is created, each consisting of a collection of semi-transparent triangles.
+2. Each individual's fitness is evaluated based on the difference between its pixel values and those of the target image.
+3. The individuals in the population are selected for reproduction based on their fitness.
+4. The offspring are created through crossover (swapping triangles between two parents) and mutation (randomly altering the properties of a triangle).
+5. The new generation replaces the old one, and the process repeats until a satisfactory approximation is reached or a specified number of generations have elapsed.
 
-The implementation uses the Python Imaging Library (PIL) to load, convert, and display images. The fitness evaluation compares the rendered image (as PIL Image) with the target image (as a NumPy array).
+## Requirements
 
-## Contributing
+- Python 3.6 or later
+- PIL (Python Imaging Library)
 
-Contributions to improve the algorithm, optimize performance, or enhance the project in any way are welcome. Please feel free to submit a pull request or open an issue.
+## Usage
 
-## License
+1. Ensure you have the required libraries installed:
 
-This project is licensed under the MIT License.
+```python
+pip install pillow
+```
+
+1. Set the `target_image_path` variable in the script to the path of your target image.
+2. Adjust the following parameters as needed:
+   - `triangle_count`: The number of triangles per individual.
+   - `population_size`: The size of the population.
+   - `generations`: The number of generations to run the algorithm for.
+   - `crossover_rate`: The probability of crossover between two parents.
+   - `mutation_rate`: The probability of a triangle undergoing mutation.
+3. Run the script:
+
+```python
+python genetic_image_approximation.py
+```
+
+1. The output images will be saved to the `output` directory. The script saves an image at every `save_interval` generations to visualize the progress of the algorithm.
+
+## Example
+
+The following example demonstrates how to use the script with a custom target image, a population size of 20, a triangle count of 128, and a total of 2000 generations:
+
+```python
+pythonCopy codetarget_image_path = "path/to/your/target/image.png"
+triangle_count = 128
+population_size = 20
+output_dir = "output"
+save_interval = 100
+
+approximator = ImageApproximator(target_image_path, triangle_count, population_size, output_dir, save_interval)
+generations = 2000
+crossover_rate = 0.7
+mutation_rate = 0.1
+approximator.evolve(generations, crossover_rate, mutation_rate)
+```
+
+Adjust the parameters as needed to achieve the desired level of approximation.
