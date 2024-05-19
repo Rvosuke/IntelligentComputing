@@ -1,0 +1,55 @@
+# 高精度存储
+
+使用一个数组来存储一个大数，数组的每个元素存储一个数位，这样就可以存储一个很大的数了。
+
+数组的第一位存储最低位，数组的最后一位存储最高位。
+
+```cpp
+const int N = 100010;
+string a, b;
+cin >> a;
+vector<int> A;
+for (int i = a.size() - 1; i >= 0; i -- ) A.push_back(a[i] - '0');
+cin >> b;
+vector<int> B;
+for (int i = b.size() - 1; i >= 0; i -- ) B.push_back(b[i] - '0');
+```
+
+# 高精度加法
+
+使用算法来模拟手算的过程，从低位到高位，逐位相加，注意进位即可。
+
+```cpp
+vector<int> add(vector<int> &A, vector<int> &B) {  // 加上引用，避免拷贝
+    vector<int> C;
+    int t = 0;
+    for (int i = 0; i < A.size() || i < B.size(); i ++ ) {
+        if (i < A.size()) t += A[i];
+        if (i < B.size()) t += B[i];
+        C.push_back(t % 10);
+        t /= 10;
+    }
+    if (t) C.push_back(t);
+    return C;
+}
+```
+
+# 高精度减法
+
+使用算法来模拟手算的过程，从低位到高位，逐位相减，注意借位即可。
+
+```cpp
+vector<int> sub(vector<int> &A, vector<int> &B) {
+    vector<int> C;
+    int t = 0;
+    for (int i = 0; i < A.size(); i ++ ) {
+        t = A[i] - t;
+        if (i < B.size()) t -= B[i];
+        C.push_back((t + 10) % 10);
+        if (t < 0) t = 1;
+        else t = 0;
+    }
+    while (C.size() > 1 && C.back() == 0) C.pop_back();
+    return C;
+}
+```
